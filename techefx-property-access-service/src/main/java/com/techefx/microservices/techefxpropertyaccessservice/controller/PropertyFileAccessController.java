@@ -1,8 +1,9 @@
 package com.techefx.microservices.techefxpropertyaccessservice.controller;
 
-import java.net.http.HttpHeaders;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,17 +21,19 @@ public class PropertyFileAccessController {
 	
 	@GetMapping("accessPropertyFile")
 	public PropertyAccessValue accessPropertyFile() {
+		
+		refreshActuator();
 		return new PropertyAccessValue(propertyAccessBean.getName(), propertyAccessBean.getDescription());
 	}
 	
 	public void refreshActuator() {
-		RestTemplate resTemplate=new RestTemplate();
-		final String baseUrl="";
+		RestTemplate resTemplate = new RestTemplate();
+		final String baseUrl = "http://localhost:8100/actuator/refresh";
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Content-Type","application/json");
-		HttpEntitiy entity = new HttpEntity(headers);
+		HttpEntity entity = new HttpEntity(headers);
 		
-		ResponseEntity<String> results=RestTemplate.postForEntity(baseUrl,entity,String.class);
+		ResponseEntity<String> results = resTemplate.postForEntity(baseUrl, entity, String.class);
 	}
 }

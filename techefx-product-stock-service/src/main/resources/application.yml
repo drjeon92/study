@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: techefx-product-stock-service
+
+  jpa:
+    defer-datasource-initialization: true
+    
+server:
+  port: ${port:8800}
