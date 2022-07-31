@@ -4,5 +4,4 @@ spring:
     
 server:
   port: ${port:8700}
-
-
+  
